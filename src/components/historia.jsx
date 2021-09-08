@@ -3,13 +3,13 @@ import Opcion from "./opcion";
 import Recordatorio from "./recordatorio"
 import Data from "./data.json"
 
+let contador = 2;
 
 class Historia extends React.Component{
 constructor(props){
     super(props)
 
     this.state = {
-        paso:1,
         contenido: Data[0].historia,
         eleccionAnterior:"",
         listaDeElecciones:[],
@@ -20,17 +20,25 @@ constructor(props){
     this.handleChangeBotonB = this.handleChangeBotonB.bind(this)
 }
 
+componentDidUpdate() {
+  
+   contador = contador + 1
+   
+  }
+
 handleChangeBotonA() {
-    let nuevoPaso = this.state.paso +1
-    if(nuevoPaso<=5){
-        let siguienteHistoria = Data.filter(data=> data.id ===nuevoPaso+"a")[0]
+   
+    
+    if(contador<=5){
         
-        this.setState({paso: nuevoPaso,
+        let siguienteHistoria = Data.filter(data=> data.id ===contador+"a")[0]
+        
+        this.setState({
             eleccionAnterior:"A",
             contenido:siguienteHistoria.historia,
             opcionA:siguienteHistoria.opciones.a,
             opcionB:siguienteHistoria.opciones.b} )
-        if(nuevoPaso>2){
+        if(contador>2){
             let nuevaListaElecciones = [...this.state.listaDeElecciones,this.state.eleccionAnterior]
             this.setState({
                 listaDeElecciones:nuevaListaElecciones})
@@ -41,15 +49,15 @@ handleChangeBotonA() {
 }
 
 handleChangeBotonB(){
-    let nuevoPaso = this.state.paso+1
-    if(nuevoPaso<=5){
-        let siguienteHistoria = Data.filter(data=> data.id ===nuevoPaso+"b")[0]
-        this.setState({paso:nuevoPaso,
+    
+    if(contador<=5){
+        let siguienteHistoria = Data.filter(data=> data.id ===contador+"b")[0]
+        this.setState({
             eleccionAnterior:"B",
             contenido:siguienteHistoria.historia,
             opcionA:siguienteHistoria.opciones.a,
             opcionB:siguienteHistoria.opciones.b} )
-        if(nuevoPaso>2){
+        if(contador>2){
             let nuevaListaElecciones = [...this.state.listaDeElecciones,this.state.eleccionAnterior]
             this.setState({
                 listaDeElecciones:nuevaListaElecciones})
