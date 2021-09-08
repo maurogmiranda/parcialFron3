@@ -1,11 +1,19 @@
 import Historia from "./components/historia";
+import React from "react";
 
-function App() {
-  return (
-    <div className="layout" >
+class App extends React.Component{
+  render(){
+    return(
+      <div className="layout" >
       <Historia/>
     </div>
-  );
+
+    )
+  }
 }
+
+
+
+
 
 export default App;
