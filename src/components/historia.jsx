@@ -16,8 +16,7 @@ constructor(props){
         opcionA: Data[0].opciones.a,
         opcionB:Data[0].opciones.b}
 
-    this.handleChangeBotonA = this.handleChangeBotonA.bind(this)
-    this.handleChangeBotonB = this.handleChangeBotonB.bind(this)
+    this.handleChange = this.handleChange.bind(this)
 }
 
 componentDidUpdate() {
@@ -26,15 +25,14 @@ componentDidUpdate() {
    
   }
 
-handleChangeBotonA() {
+handleChange(evento) {
    
     
     if(contador<=5){
         
-        let siguienteHistoria = Data.filter(data=> data.id ===contador+"a")[0]
-        
+        let siguienteHistoria = Data.find(data=> data.id ===`${contador}` + evento.target.innerText.toLowerCase()) // atrapo la siguiente historia segun el boton que haya apretado
         this.setState({
-            eleccionAnterior:"A",
+            eleccionAnterior:evento.target.innerText,
             contenido:siguienteHistoria.historia,
             opcionA:siguienteHistoria.opciones.a,
             opcionB:siguienteHistoria.opciones.b} )
@@ -48,32 +46,14 @@ handleChangeBotonA() {
     }
 }
 
-handleChangeBotonB(){
-    
-    if(contador<=5){
-        let siguienteHistoria = Data.filter(data=> data.id ===contador+"b")[0]
-        this.setState({
-            eleccionAnterior:"B",
-            contenido:siguienteHistoria.historia,
-            opcionA:siguienteHistoria.opciones.a,
-            opcionB:siguienteHistoria.opciones.b} )
-        if(contador>2){
-            let nuevaListaElecciones = [...this.state.listaDeElecciones,this.state.eleccionAnterior]
-            this.setState({
-                listaDeElecciones:nuevaListaElecciones})
-        }
-    }else{
-        alert("Fin")
-    }
-}
 
 render(){
     return (
         <> 
         <h1 className="historia">{this.state.contenido}</h1>
         <div className= "opciones">
-        <Opcion handleClick={this.handleChangeBotonA} opcion = {this.state.opcionA}>A</Opcion>
-        <Opcion handleClick={this.handleChangeBotonB} opcion = {this.state.opcionB}>B</Opcion>
+        <Opcion handleClick={this.handleChange} opcion = {this.state.opcionA}>A</Opcion>
+        <Opcion handleClick={this.handleChange} opcion = {this.state.opcionB}>B</Opcion>
         </div>
         <Recordatorio eleccionAnterior={this.state.eleccionAnterior} listaElecciones={this.state.listaDeElecciones.map((eleccion,index)=><li key={eleccion + index}>{eleccion}</li>)} />
         </>
