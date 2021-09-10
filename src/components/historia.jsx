@@ -26,13 +26,13 @@ componentDidUpdate() {
   }
 
 handleChange(evento) {
-   
+    const botonElejido = evento.target.innerText
     
     if(contador<=5){
         
-        let siguienteHistoria = Data.find(data=> data.id ===`${contador}` + evento.target.innerText.toLowerCase()) // atrapo la siguiente historia segun el boton que haya apretado
+        let siguienteHistoria = Data.find(data=> data.id ===`${contador}` + botonElejido.toLowerCase()) // atrapo la siguiente historia segun el boton que haya apretado
         this.setState({
-            eleccionAnterior:evento.target.innerText,
+            eleccionAnterior:botonElejido,
             contenido:siguienteHistoria.historia,
             opcionA:siguienteHistoria.opciones.a,
             opcionB:siguienteHistoria.opciones.b} )
